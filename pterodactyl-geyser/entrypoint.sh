@@ -17,7 +17,7 @@ if [ "${AUTO_UPDATE}" == "1" ]; then
 	if [ "$LATEST_TAG" != "$CURRENT_TAG" ]; then
 		echo "Update available!"
 		echo "Updating from '$CURRENT_TAG' -> '$LATEST_TAG'"
-                curl -L -s -0 ${SERVER_JARFILE} https://github.com/${GITHUB_REPO}/releases/latest/download/package.zip
+                curl -L -s -0 ${SERVER_JARFILE} https://github.com/${GITHUB_REPO}/releases/latest/download/${GITHUB_ASSET}
 
 		echo "$LATEST_TAG" > ".currenttag"
 		echo "Updated!"
