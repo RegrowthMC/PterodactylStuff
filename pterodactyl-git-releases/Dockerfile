@@ -8,9 +8,10 @@ FROM        eclipse-temurin:21-jdk-jammy
 LABEL       author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 USER root
-RUN 		sudo apt-get update -y \
- 			&& sudo apt-get install -y lsof curl ca-certificates openssl git tar sqlite3 fontconfig libfreetype6 tzdata iproute2 libstdc++6 jq \
- 			&& useradd -d /home/container -m container
+
+RUN sudo apt-get update -y
+RUN apt-get install -y lsof curl ca-certificates openssl git tar sqlite3 fontconfig libfreetype6 tzdata iproute2 libstdc++6 jq
+RUN useradd -d /home/container -m container
  
 USER container
 ENV  USER=container HOME=/home/container
