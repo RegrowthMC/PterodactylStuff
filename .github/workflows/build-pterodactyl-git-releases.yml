@@ -34,13 +34,16 @@ jobs:
           echo "DOCKER_OWNER=$(echo $DOCKER_OWNER | tr '[A-Z]' '[a-z]')" >> $GITHUB_ENV
           echo "DOCKER_CONTAINER=$(echo $DOCKER_CONTAINER | tr '[A-Z]' '[a-z]')" >> $GITHUB_ENV
 
+      - name: Build the Docker image
+        run: |
+          docker build . --file bootstrap/standalone/Dockerfile --tag $DOCKER_CONTAINER:$DOCKER_TAG
+          [[ "${{ github.ref }}" == "refs/heads/master" ]] && docker tag $DOCKER_CONTAINER:$DOCKER_TAG ghcr.io/$DOCKER_OWNER/$DOCKER_CONTAINER:latest
+          docker tag $DOCKER_CONTAINER:$DOCKER_TAG ghcr.io/$DOCKER_OWNER/$DOCKER_CONTAINER:$DOCKER_TAG
+
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
-      - name: Build and push
-        uses: docker/build-push-action@v5.4.0
-        with:
-          context: ${{ env.DOCKER_CONTAINER }}/
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ghcr.io/${{ env.DOCKER_OWNER }}/${{ env.DOCKER_CONTAINER }}:latest
+      - name: Push to GHCR
+        run: |
+          [[ "${{ github.ref }}" == "refs/heads/master" ]] && docker push ghcr.io/$DOCKER_OWNER/$DOCKER_CONTAINER:latest
+          docker push ghcr.io/$DOCKER_OWNER/$DOCKER_CONTAINER:$DOCKER_TAG
