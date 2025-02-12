@@ -1,4 +1,4 @@
-name: Build pterodactyl-geyser
+name: Build pterodactyl-git-releases
 
 on:
   workflow_dispatch:
@@ -6,13 +6,13 @@ on:
     branches:
       - 'master'
     paths:
-      - '.github/workflows/build-pterodactyl-geyser.yml'
-      - 'pterodactyl-geyser/**'
-      - '!pterodactyl-geyser/README.md'
+      - '.github/workflows/build-git-releases.yml'
+      - 'pterodactyl-git-releases/**'
+      - '!pterodactyl-git-releases/README.md'
 
 env:
   DOCKER_OWNER: ${{ github.repository_owner }}
-  DOCKER_CONTAINER: pterodactyl-geyser
+  DOCKER_CONTAINER: pterodactyl-git-releases
 
 jobs:
   build:
