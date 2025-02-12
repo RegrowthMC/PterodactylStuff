@@ -1,2 +1,2 @@
-# Containers: GeyserMC
-Container built for auto updating of GeyserMC, built upon https://github.com/pterodactyl/images/tree/java.
+# Containers: Hash
+Container built for auto updating projects, built upon https://github.com/GeyserMC/pterodactyl-stuff/blob/master/pterodactyl-geyser/ with adjustments for configurable use cases
