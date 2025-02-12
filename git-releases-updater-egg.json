@@ -1,0 +1,72 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-02-12T21:54:26+01:00",
+    "name": "MCXboxBroadcast",
+    "author": "github.com/regrowthmc",
+    "description": "Automatically update a jar file from a GitHub Repo's releases",
+    "features": null,
+    "docker_images": {
+        "Java 21": "ghcr.io\/regrowthmc\/pterodactyl-git-releases:latest"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Creation of Xbox LIVE session was successful!\"\r\n}",
+        "logs": "{}",
+        "stop": "exit"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Install script.\r\n#\r\n# Server Files: \/mnt\/server\r\ncd \/mnt\/server\r\ncurl -L -o ${SERVER_JARFILE} https:\/\/github.com\/${GITHUB_REPO}\/releases\/latest\/download\/${GITHUB_ASSET}",
+            "container": "ghcr.io\/pterodactyl\/installers:alpine",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": [
+        {
+            "name": "JAR Name",
+            "description": "Server Jarfile, by default this is set to 'server.jar'.\r\nSet it to otherwise if you wish to have a different jarfile name.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "server.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Update",
+            "description": "Should the application attempt an auto-update on startup.",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean|numeric",
+            "field_type": "text"
+        },
+        {
+            "name": "GitHub Repository",
+            "description": "The GitHub repo of the project",
+            "env_variable": "GITHUB_REPO",
+            "default_value": "Owner\/Repo",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "GitHub Release Asset Name",
+            "description": "The name of the release asset to download",
+            "env_variable": "GITHUB_ASSET",
+            "default_value": "asset.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
