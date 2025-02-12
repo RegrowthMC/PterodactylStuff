@@ -5,7 +5,7 @@
         "update_url": null
     },
     "exported_at": "2025-02-12T21:54:26+01:00",
-    "name": "MCXboxBroadcast",
+    "name": "Git Releases Auto-Updater",
     "author": "github.com/regrowthmc",
     "description": "Automatically update a jar file from a GitHub Repo's releases",
     "features": null,
