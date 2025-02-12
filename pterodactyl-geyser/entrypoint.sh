@@ -11,15 +11,15 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 if [ "${AUTO_UPDATE}" == "1" ]; then
 	echo "Checking for updates..."
 
-	LATEST_HASH=`curl -L https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest | jq -r .downloads.standalone.sha256`
-	CURRENT_HASH=`cat .currenthash 2>/dev/null`
+        LATEST_TAG=`curl -L "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${GITHUB_REPO}/releases/latest | jq -r .tag_name`
+	CURRENT_TAG=`cat .currenttag 2>/dev/null`
 
-	if [ "$LATEST_HASH" != "$CURRENT_HASH" ]; then
+	if [ "$LATEST_TAG" != "$CURRENT_TAG" ]; then
 		echo "Update available!"
-		echo "Updating from '$CURRENT_HASH' -> '$LATEST_HASH'"
-		curl -L -s -o ${SERVER_JARFILE} https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/standalone
+		echo "Updating from '$CURRENT_TAG' -> '$LATEST_TAG'"
+                curl -L -s -0 ${SERVER_JARFILE} https://github.com/${GITHUB_REPO}/releases/latest/download/package.zip
 
-		echo "$LATEST_HASH" > ".currenthash"
+		echo "$LATEST_TAG" > ".currenttag"
 		echo "Updated!"
 	else
 		echo "No update available"
