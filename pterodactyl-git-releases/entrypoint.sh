@@ -14,6 +14,7 @@ if [ "${AUTO_UPDATE}" == "1" ]; then
         LATEST_TAG=`curl -L https://api.github.com/repos/${GITHUB_REPO}/releases/latest | jq -r .tag_name`
         #LATEST_TAG=`curl -H -L "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${GITHUB_REPO}/releases/latest | jq -r .tag_name`
 	CURRENT_TAG=`cat .currenttag 2>/dev/null`
+        echo "Found latest tag '$LATEST_TAG' and current tag '$CURRENT_TAG"
 
 	if [ "$LATEST_TAG" != "$CURRENT_TAG" ]; then
 		echo "Update available!"
